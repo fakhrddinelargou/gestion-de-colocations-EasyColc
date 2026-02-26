@@ -38,7 +38,7 @@
                 </div>
 
                 <!-- Arrow Button -->
-                <a href="#"
+                <a href="{{ route('colocations.show', $colocation->id)}}"
                    class="w-10 h-10 flex items-center justify-center
                           bg-gray-900 text-white rounded-full
                           shadow hover:scale-105 transition">

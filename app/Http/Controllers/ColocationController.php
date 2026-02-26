@@ -20,15 +20,17 @@ class ColocationController extends Controller
     $colocation = $request->validated();
 
     $colocation['owner_id'] = auth()->id();
+
+    // dd($colocation);
     Colocation::create($colocation);
 
     return Redirect::route('colocations');
     }
 
-
-
-    public function show(){
-       $colocation = Colocation::find(6);
-    dd($colocation->user);
+    public function show(Request $request){
+      $colocation  = Colocation::find($request->id);
+      return view('colocation/colocations' , compact('colocation'));
     }
+
+
 }

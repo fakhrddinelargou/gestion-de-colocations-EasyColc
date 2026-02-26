@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/colocations' , [ColocationController::class , 'index'])->name('colocations');
     Route::post('/colocations' , [ColocationController::class , 'store'])->name('colocations.store');
+    Route::get('/colocations/{id}' , [ColocationController::class , 'show'])->name('colocations.show');
     // Route::get('/colocations' , [ColocationController::class , 'show'])->name('colocations.show');
 });
 
