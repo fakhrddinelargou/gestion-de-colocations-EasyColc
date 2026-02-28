@@ -28,7 +28,7 @@
                 Inviter un membre
             </h2>
 
-            <form action="#" method="POST" class="space-y-6">
+            <form action="{{ route('invitation.store', $colocation->id) }}" method="POST" class="space-y-6">
                 @csrf
 
                 <!-- Email -->
@@ -41,7 +41,7 @@
                         type="email"
                         name="email"
                         placeholder="exemple@email.com"
-                        class="w-full rounded-xl border border-slate-300 px-4 py-3 
+                        class="w-full text-black rounded-xl border border-slate-300 px-4 py-3 
                                focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
                                outline-none transition"
                     >

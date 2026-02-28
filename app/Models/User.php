@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Colocation;
+use App\Models\Expense;
+use App\Models\Member;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -21,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -50,5 +53,18 @@ class User extends Authenticatable
     public function colocation(){
         return $this->hasMany(Colocation::class);
     }
+
+    public function member(){
+        return $this->hasMany(Member::class);
+    }
+
+    public function expenses(){
+ 
+    return $this->hasMany(Expense::class);
+
+    }
+
+
+
 
 }

@@ -9,11 +9,21 @@
                 {{ $colocation->status }}
             </span>
 
-            <!-- Avatar -->
             <div class="w-12 h-12 flex items-center justify-center
-                        bg-indigo-600 text-white rounded-xl text-lg font-bold mb-4">
-                C
-            </div>
+            bg-indigo-100 text-indigo-600 rounded-xl">
+
+    <svg xmlns="http://www.w3.org/2000/svg"
+         class="w-6 h-6"
+         fill="none"
+         viewBox="0 0 24 24"
+         stroke="currentColor">
+        <path stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 9l9-7 9 7v11a2 2 0 01-2 2h-4a2 2 0 01-2-2V12H9v8a2 2 0 01-2 2H3V9z"/>
+    </svg>
+
+</div>
 
             <!-- Name -->
             <h2 class="text-lg font-semibold text-gray-800">
@@ -22,7 +32,7 @@
 
             <!-- Members -->
             <p class="text-sm text-gray-500 mb-6">
-                2 MEMBRES
+                {{ $colocation->members->count() }} MEMBRES
             </p>
 
             <!-- Bottom Info -->
@@ -33,7 +43,7 @@
                         Dépenses
                     </p>
                     <p class="text-base font-semibold text-gray-800">
-                        2
+                        {{ $colocation->expenses->count() }}
                     </p>
                 </div>
 

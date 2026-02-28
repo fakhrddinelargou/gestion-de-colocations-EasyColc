@@ -8,7 +8,7 @@
 <span class="material-symbols-outlined text-primary">badge</span>
 <h3 class="text-lg font-bold">Informations personnelles</h3>
 </div>
-<form class="space-y-6" action="{{ route('profile.update') }}" , method='POST'>
+<form class="space-y-6" action="{{ route('profile.update') }}"  method='POST'>
     @csrf
     @method('PATCH')
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -68,6 +68,18 @@
                             </button>
 </div>
 </section>
+<div class="w-full  flex items-center justify-end">
+
+<x-logout>
+   <button 
+        @click="open = true"
+        class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm font-medium rounded-xl transition">
+        Logout
+    </button>
+</x-logout>
+
+
+</div>
 </div>
 </main>
 </x-app-layout>
