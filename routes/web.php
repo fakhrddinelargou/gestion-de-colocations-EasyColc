@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/category' , [CategoryController::class , 'store'])->name('category.store');
 
     Route::post('/expense' , [ExpenseController::class , 'store'])->name('expenses.store');
-    Route::patch('/expense' , [ExpenseController::class , 'store'])->name('expenses.update');
+    Route::put('/expense/{expense}' , [ExpenseController::class , 'update'])->name('expenses.update');
     Route::delete('/expense/{id}' , [ExpenseController::class , 'delete'])->name('expenses.delete');
 
     Route::post('/logout' , [AuthenticatedSessionController::class , 'destroy'])->name('logout');

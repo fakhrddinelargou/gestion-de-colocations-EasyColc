@@ -37,21 +37,33 @@ public function store(Request $request){
 
 
 
-    public function update(Request $request){
-      $request->validate([
-          'title' => 'required|string|max:100',
-        'amount' => 'required|numeric|min:5',
-      ]);
+    public function update(Request $request, Expense $expense)
+{
 
-      Expense::update([
-             'title' => $request->title,
+    $request->validate([
+        'title' => 'required|string|max:100',
+        'amount' => 'required|numeric|min:5',
+    ]);
+
+    $expense->update([
+        'title' => $request->title,
         'amount' => $request->amount,
         'payer_id' => $request->payer_id,
         'colocation_id' => $request->colocation_id,
         'category_id' => $request->category_id,
         'expense_date' => $request->expense_date,
-      ]);
+    ]);
 
-      return redirect()->route('colocations.show' , $request->colocation_id);
-    }
+    return redirect()->route('colocations.show', $expense->colocation_id);
+}
+
+
+public function delete($id){
+
+$expense = Expense::findOrFail($id);
+$expense->delete();
+return back();
+
+}
+
 }

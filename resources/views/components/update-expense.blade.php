@@ -22,9 +22,9 @@
                 Nouvelle dépense
             </h2>
 
-            <form class="space-y-6" action="{{ route('expenses.update') }}" method="POST">
+            <form class="space-y-6" action="{{ route('expenses.update' , $expense) }}" method="POST">
             @csrf
-            @method('PATCH')
+            @method('PUT')
             <input type="hidden" name="colocation_id" value="{{ $colocation->id }}">
                 <!-- Titre -->
                 <div>
@@ -34,7 +34,7 @@
                     <input 
                         type="text"
                         name='title'
-                        value="{{ $expense->title }}"
+                        value="{{ old('title' ,$expense->title) }}"
                         class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none"
                         placeholder="Ex: Courses"
                     >
@@ -50,7 +50,7 @@
                         <input 
                             type="number"
                             name='amount'
-                        value="{{ $expense->amount }}"
+                        value="{{ old('title' ,$expense->amount) }}"
 
                             step="0.01"
                             class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none"
@@ -64,7 +64,7 @@
                         <input 
                             type="date"
                             name="expense_date"
-                        value="{{ $expense->expense_date }}"
+                        value="{{ old('expense_date', \Carbon\Carbon::parse($expense->expense_date)->format('Y-m-d')) }}"
 
                             class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none"
                         >
@@ -75,9 +75,12 @@
                             Payé par
                         </label>
                         <select name="payer_id" required class="w-full rounded-xl border border-slate-300 px-4 py-3">
-                            @foreach($colocation->members as $member)
-                            <option value='{{ $member->user_id }}'   {{ $member->id == $expense->payer_id ? 'selected' : '' }}>{{ $member->role == 'owner' ? 'Admin' : $member->user->name}}</option>
-                            @endforeach
+                                   @foreach($colocation->members as $member)
+                                   <option value="{{ $member->user_id }}"
+                                   @selected(old('payer_id', $expense->payer_id) == $member->user_id)>
+                                   {{ $member->role == 'owner' ? 'Admin' : $member->user->name }}
+                                   </option>
+                                   @endforeach
                         </select>
                     </div>
 
@@ -86,9 +89,12 @@
                             Catégorie
                         </label>
                         <select name="category_id"  required class="w-full rounded-xl border border-slate-300 px-4 py-3">
-                            @foreach($colocation->categories as $category)
-                            <option  value="{{ $category->id}}" {{ $category->id == $expense->category_id ? 'selected' : '' }} >{{ $category->name }}</option>
-                            @endforeach
+                                @foreach($colocation->categories as $category)
+                                <option value="{{ $category->id }}"
+                                    @selected(old('category_id', $expense->category_id) == $category->id)>
+                                    {{ $category->name }}
+                                </option>
+                                @endforeach
                         </select>
                         </div>
 
