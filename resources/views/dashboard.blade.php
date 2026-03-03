@@ -17,7 +17,7 @@
                                         class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Mon
                                         score réputation</p>
                                     <p
-                                        class="text-3xl font-black text-slate-900">0</p>
+                                        class="text-3xl font-black text-slate-900">{{ auth()->user()->reputation }}</p>
                                 </div>
                             </div>
                             <div
@@ -30,9 +30,9 @@
                                 <div>
                                     <p
                                         class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Dépenses
-                                        Globales (Feb)</p>
+                                        Globales</p>
                                     <p
-                                        class="text-3xl font-black text-slate-900">0,00
+                                        class="text-3xl font-black text-slate-900">{{ $total }}
                                         €</p>
                                 </div>
                             </div>
@@ -42,66 +42,73 @@
                                 <h2
                                     class="text-xl font-black text-slate-900 uppercase tracking-tight">Dépenses
                                     récentes</h2>
+                                    @if(auth()->user()->member  && auth()->user()->member->left_at == 'null' )
                                 <a
                                     class="text-sm font-bold text-primary hover:underline"
-                                    href="{{ route('colocations') }}">Voir tout</a>
+                                    href="{{ route('colocations.show' , auth()->user()->member->colocation->id) }}">Voir tout</a>
+                                    @endif
+
                             </div>
-                            <div
-                                class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                                <table class="w-full text-left">
-                                    <thead
-                                        class="bg-slate-50 border-b border-slate-100">
-                                        <tr>
-                                            <th
-                                                class="px-6 py-4 text-[11px] font-black text-slate-400 uppercase tracking-widest">TITRE
-                                                / CATÉGORIE</th>
-                                            <th
-                                                class="px-6 py-4 text-[11px] font-black text-slate-400 uppercase tracking-widest">PAYEUR</th>
-                                            <th
-                                                class="px-6 py-4 text-[11px] font-black text-slate-400 uppercase tracking-widest">MONTANT</th>
-                                            <th
-                                                class="px-6 py-4 text-[11px] font-black text-slate-400 uppercase tracking-widest">COLOC.</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="px-6 py-20 text-center"
-                                                colspan="4">
-                                                <div
-                                                    class="flex flex-col items-center opacity-40">
-                                                    <span
-                                                        class="material-symbols-outlined text-5xl mb-3">receipt_long</span>
-                                                    <p
-                                                        class="text-slate-500 font-medium">Aucune
-                                                        dépense récente.</p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                     <div class="bg-white shadow-md rounded-xl overflow-hidden">
+
+    <table class="w-full text-sm text-left text-gray-600">
+        
+        <thead class="bg-gray-50 text-gray-500 uppercase text-xs tracking-wider">
+            <tr>
+                <th class="px-6 py-4">Titre / Catégorie</th>
+                <th class="px-6 py-4">Payeur</th>
+                <th class="px-6 py-4 text-right">Montant</th>
+                <th class="px-6 py-4 text-center">Coloc.</th>
+            </tr>
+        </thead>
+
+        <tbody class="divide-y divide-gray-100">
+
+            @forelse($lastExpenses as $expense)
+
+                <tr class="hover:bg-gray-50 transition">
+                    
+                    <td class="px-6 py-4">
+                        <div class="font-medium text-gray-800">
+                            {{ $expense->title }}
+                        </div>
+                        <div class="text-xs text-gray-400">
+                            {{ $expense->category->name ?? 'Sans catégorie' }}
+                        </div>
+                    </td>
+
+                    <td class="px-6 py-4">
+                        {{ $expense->user->name }}
+                    </td>
+
+                    <td class="px-6 py-4 text-right font-semibold">
+                        {{ number_format($expense->amount, 2) }} €
+                    </td>
+
+                    <td class="px-6 py-4 text-center">
+                        {{ $expense->colocation->name ?? '-' }}
+                    </td>
+
+                </tr>
+
+            @empty
+
+                <tr>
+                    <td colspan="4" class="px-6 py-10 text-center text-gray-400">
+                        Aucune dépense trouvée.
+                    </td>
+                </tr>
+
+            @endforelse
+
+        </tbody>
+    </table>
+
+</div>
                         </div>
                     </div>
                 </main>
-                <aside class="w-80 p-8">
-                    <div
-                        class="bg-gradient-to-br from-slate-800 to-slate-950 rounded-xl shadow-xl p-6 text-white h-fit">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3
-                                class="text-sm font-black uppercase tracking-wider">Membres
-                                de la coloc</h3>
-                            <span
-                                class="bg-slate-600/50 text-slate-300 text-[10px] font-black px-2 py-0.5 rounded border border-white/10 uppercase tracking-tighter">VIDE</span>
-                        </div>
-                        <div
-                            class="py-10 flex flex-col items-center justify-center text-center">
-                            <span
-                                class="material-symbols-outlined text-slate-500 text-4xl mb-3">group_off</span>
-                            <p class="text-xs font-bold text-slate-400">Aucune
-                                colocation active.</p>
-                        </div>
-                    </div>
-                </aside>
+               
             </div>
 
             </div>

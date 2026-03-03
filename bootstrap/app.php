@@ -11,7 +11,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+          $middleware->alias([
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'banned' => \App\Http\Middleware\CheckIfBanned::class,
+    ]);
+      
+    $middleware->appendToGroup('web', [
+        \App\Http\Middleware\CheckIfBanned::class,
+    ]);
+    
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

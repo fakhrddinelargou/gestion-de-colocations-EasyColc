@@ -1,6 +1,5 @@
 <x-app-layout>
-
-            <div class="flex flex-1 overflow-hidden">
+    <div class="flex flex-1 overflow-hidden">
                 <main class="flex-1 p-8 overflow-y-auto">
                     <div class="max-w-4xl mx-auto">
                         <div class="flex items-center justify-between mb-8">
@@ -8,6 +7,27 @@
                                 class="text-2xl font-black text-slate-900">Dépenses
                                 récentes</h2>
                        <div class="flex items-center gap-3">
+                        <x-left-colocation :colocation="$colocation">
+                            <button
+                            @click="open=true"
+                            class="group relative inline-flex items-center justify-center gap-2
+                            px-3.5 py-2.5
+                            bg-rose-600 text-white font-medium
+                            rounded-xl
+                            shadow-md
+                            transition-all duration-200 ease-out
+                            hover:bg-rose-700
+                            hover:shadow-lg
+                            hover:-translate-y-0.5
+                            active:scale-95">
+                            
+                            <span class="material-symbols-outlined text-sm transition-transform duration-300 group-hover:-rotate-12">
+                                logout
+                            </span>
+                        </button>
+</x-left-colocation>
+
+@if(auth()->id() == $colocation->owner_id)
 <x-categories :id="$colocation->id" >
     <!-- Add Category -->
     <button
@@ -38,7 +58,7 @@
     </button>
 
 </x-categories >
-
+@endif
 
     <!-- Nouvelle dépense -->
     <x-creat-depense :members="$members" :colocation="$colocation">
@@ -90,51 +110,8 @@
                 </main>
                 <aside
                     class="w-80 bg-slate-50 border-l border-slate-200 p-6 flex flex-col gap-6 overflow-y-auto">
-                    <div
-                        class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                        <h3
-                            class="text-sm font-black text-slate-900 mb-4 uppercase tracking-wider">Qui
-                            doit à qui ?</h3>
-                        <div class="space-y-4">
-                            <div
-                                class="flex flex-col gap-3 p-3 bg-slate-50 rounded-lg">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <span
-                                            class="text-xs font-bold text-slate-700">Sarah</span>
-                                        <span
-                                            class="material-symbols-outlined text-xs text-slate-400">arrow_forward</span>
-                                        <span
-                                            class="text-xs font-bold text-slate-700">Moi</span>
-                                    </div>
-                                    <span
-                                        class="text-sm font-black text-emerald-600">120.00€</span>
-                                </div>
-                                <button
-                                    class="w-full py-2 bg-white border border-slate-200 text-[11px] font-bold text-slate-500 rounded hover:bg-slate-100 transition-colors uppercase">Marquer
-                                    payé</button>
-                            </div>
-                            <div
-                                class="flex flex-col gap-3 p-3 bg-slate-50 rounded-lg">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <span
-                                            class="text-xs font-bold text-slate-700">Moi</span>
-                                        <span
-                                            class="material-symbols-outlined text-xs text-slate-400">arrow_forward</span>
-                                        <span
-                                            class="text-xs font-bold text-slate-700">James</span>
-                                    </div>
-                                    <span
-                                        class="text-sm font-black text-rose-500">45.00€</span>
-                                </div>
-                                <button
-                                    class="w-full py-2 bg-white border border-slate-200 text-[11px] font-bold text-slate-500 rounded hover:bg-slate-100 transition-colors uppercase">Marquer
-                                    payé</button>
-                            </div>
-                        </div>
-                    </div>
-
+<!-- settlement -->
+@include('components/settlement')
 <!-- Members -->
             @include('components/members')      
                 </aside>

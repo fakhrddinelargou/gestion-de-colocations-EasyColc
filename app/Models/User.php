@@ -23,7 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'is_banned'
     ];
 
     /**
@@ -51,11 +52,11 @@ class User extends Authenticatable
 
 
     public function colocation(){
-        return $this->hasMany(Colocation::class);
+        return $this->hasOne(Colocation::class , 'owner_id');
     }
 
     public function member(){
-        return $this->hasMany(Member::class);
+        return $this->hasOne(Member::class);
     }
 
     public function expenses(){
@@ -64,6 +65,15 @@ class User extends Authenticatable
 
     }
 
+    public function debts()
+{
+    return $this->hasMany(Settlement::class, 'debtor_id');
+}
+
+public function credits()
+{
+    return $this->hasMany(Settlement::class, 'creditor_id');
+}
 
 
 

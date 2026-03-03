@@ -37,19 +37,15 @@
                     Profile
                 
                 </a>
+                @if(auth()->user()->role == 'admin')    
+                <a
+                    class="flex items-center gap-3 px-4 py-3  rounded-xl transition-colors font-medium text-slate-600 hover:bg-slate-50 "
+                    href="{{ route('admin.dashboard') }}">
+                    <span class="material-symbols-outlined">settings</span>
+                    Admin
+                
+                </a>
+                @endif
             </nav>
-            <div
-                class="mt-auto p-4 bg-slate-50 border border-slate-100 rounded-xl">
-                <div class="flex justify-between items-center mb-2">
-                    <span
-                        class="text-xs font-bold text-slate-500 uppercase tracking-wider">Votre
-                        réputation</span>
-                    <span class="text-xs font-bold text-primary">+0
-                        Points</span>
-                </div>
-                <div
-                    class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
-                    <div class="bg-primary h-full w-[10%]"></div>
-                </div>
-            </div>
+         
         </aside>

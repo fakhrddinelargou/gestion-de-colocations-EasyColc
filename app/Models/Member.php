@@ -20,7 +20,7 @@ class Member extends Model
 
 
      public function colocation(){
-        return $this->belongsTo(Colocation::class);
+        return $this->belongsTo(Colocation::class , 'colocation_id');
     }
 
     public function user(){

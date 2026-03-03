@@ -63,19 +63,32 @@ public function accept(Request $request , $token)
         return back()->with('error', 'Vous êtes déjà dans une colocation.');
     }
 
-   
-     Member::create([
-        'colocation_id' => $invitation->colocation_id,
-        'user_id' => auth()->id(),
-        'role' => 'member',
-        'joined_at' => now(),
-    ]);
+    $existingMember   = Member::where('colocation_id' , $invitation->colocation_id)
+                          ->where('user_id' , auth()->id())
+                          ->first();
 
+    if($existingMember){
+        $existingMember->update([
+            'role' => 'member',
+            'colocation_id' => $invitation->colocation_id,
+            'user_id' => auth()->id(),
+            'joined_at' => now(),
+            'left_at' => null
+        ]);
+
+    }else{
+        Member::create([
+           'colocation_id' => $invitation->colocation_id,
+           'user_id' => auth()->id(),
+           'role' => 'member',
+           'joined_at' => now(),
+       ]);
+    }
+   
     $invitation->update([
         'status' => 'accepted'
     ]);
-
-   
+    
     return redirect()->route('colocations.show', $invitation->colocation_id);
 }
 

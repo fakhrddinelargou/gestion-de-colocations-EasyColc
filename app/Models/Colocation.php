@@ -34,6 +34,9 @@ class Colocation extends Model
         }
 
 
+        public function settlements(){
+            return $this->hassMany(Settlement::class);
+        }
 
 
 

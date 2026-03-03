@@ -10,21 +10,38 @@
                             @foreach($members as $member)
                             <div
                             class="flex items-center justify-between group">
-                            <div class="flex items-center gap-3">
-                                <div
-                                class="size-8 rounded-lg bg-white/10 flex items-center justify-center font-bold text-xs">{{ $member->role == 'owner' ? 'OR' : 'MR' }}</div>
-                                
-                                <div>
-                                    <p
-                                    class="text-xs font-bold">{{ $member->user->name }}</p>
-                                    @if($member->role == 'owner')
-                                        <span
-                                        class="text-[9px] font-black bg-amber-400 text-amber-950 px-1 rounded">OWNER</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <span
-                                    class="text-xs font-bold text-emerald-400">0€</span>
+                          <div class="flex items-center gap-3">
+
+    @if(auth()->id() === $colocation->owner_id && $member->user_id == $colocation->owner_id)
+        <x-retirer-un-membre :member="$member">
+            <button 
+                @click="open = true"
+                class="size-8 rounded-lg bg-white/10 flex items-center justify-center font-bold text-xs cursor-pointer">
+                MR
+            </button>
+        </x-retirer-un-membre>
+    @else
+        <div class="size-8 rounded-lg bg-white/10 flex items-center justify-center font-bold text-xs">
+            {{ $member->user_id === $colocation->owner_id ? 'OR' : 'MR' }}
+        </div>
+    @endif
+
+    <div>
+        <p class="text-xs font-bold">
+            {{ $member->user->name }}
+        </p>
+
+        @if($member->user_id === $colocation->owner_id)
+            <span class="text-[9px] font-black bg-amber-400 text-amber-950 px-1 rounded">
+                OWNER
+            </span>
+        @endif
+    </div>
+
+</div>
+<span
+class="text-xs font-bold text-emerald-400">0€</span>
+</div>
                             </div>
                             
                             

@@ -18,7 +18,7 @@ class Expense extends Model
     ];
 
     public function colocation(){
-        return $this->belongTo(Colocation::class);
+        return $this->belongsTo(Colocation::class , 'colocation_id');
     }
 
     public function user(){
